@@ -1,0 +1,52 @@
+---
+version: '3'
+
+#-----------------------------------------------------------------------------------------
+# ENVIRONMENT VARIABLES CONFIGURATION
+# ----------------------------------
+# - These variables are used to configure the environment for the task.
+# - It's set while calling the task. E.g.: ENV=master task <task_name>
+# - Remember to generate the .env.<env>.aws or .env.<env>.terraform previously.
+#-----------------------------------------------------------------------------------------
+env:
+    TARGET_ENVIRONMENT: '{{.ENV}}'
+
+#vars:
+#    MODULE: '{{default "default" .MODULE}}'
+#    RECIPE: '{{default "basic" .RECIPE}}'
+#    VARS: '{{default "config/fixtures.tfvars" .VARS}}'
+
+dotenv: ['.env.{{.TARGET_ENVIRONMENT}}.aws', '.env.{{.TARGET_ENVIRONMENT}}.terraform']
+
+includes:
+    common:
+        taskfile: ./DevEx/taskfile/Taskfile.common.yml
+
+    devex:
+        taskfile: ./DevEx/taskfile/Taskfile.devex.yml
+
+
+  #-----------------------------------------------------------------------------------------
+  # CUSTOMIZE THIS PART
+  # ----------------------------------
+  # - Here you can add your own TaskFiles, modules, etc.
+  # - TaskFile is fully composeable, so you can add as many TaskFiles as you want.
+  #-----------------------------------------------------------------------------------------
+#    example:
+#        taskfile: ./examples/TaskFile.yml
+#        dir: ./examples
+
+tasks:
+    default:
+        cmds:
+            - task: common:default
+
+    pre-commit-init:
+        desc: Initialize and install required hooks
+        cmds:
+            - task: common:hooks-install
+
+    pre-commit:
+        desc: Run all the pre-configured pre-commit hooks.
+        cmds:
+            - task: common:hooks
