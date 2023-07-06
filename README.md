@@ -14,6 +14,11 @@
 
 This repository is a collection of my exploration about Data Mesh and Data Engineering, I'm not an expert in this topic, but I'm learning about it and I want to share my knowledge with you.
 
+## Actual Knowledge 📚
+
+This documentation is available in the [docs](./docs) folder, and you can read it in the following links:
+
+* [Data Product Architecture](./docs/data-product/1.data-product-architecture.md)
 
 ## 📫 Contact
 
